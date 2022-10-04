@@ -19,4 +19,40 @@ const getCharacters = async ()=> {
     return characters
 }
 
-getCharacters();
+const addOrUpdateCharacters = async (character) => {
+    const params = {
+        TableName: TABLE_NAME,
+        Item: character,
+    }
+    return await dynamoClient.put(params).promise();
+};
+
+const getCharacterById = async (id) => {
+    const params = {
+        TableName: TABLE_NAME,
+        Key: {
+            id,
+        },
+    };
+    return await dynamoClient.get(params).promise();
+};
+
+const deleteCharacterById = async (id) => {
+    const params = {
+        TableName: TABLE_NAME,
+        Key: {
+            id,
+        },
+    };
+    return await dynamoClient.delete(params).promise();
+};
+
+module.exports = {
+    dynamoClient,
+    getCharacters,
+    getCharacterById,
+    addOrUpdateCharacters,
+    deleteCharacterById,
+}
+
+// addOrUpdateCharacters(hp);
